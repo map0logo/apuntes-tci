@@ -1,0 +1,56 @@
+---
+title: "Cadenas de Markov"
+author: "Francisco Palm"
+date: "4 de febrero de 2017"
+output: 
+  ioslides_presentation: 
+    incremental: yes
+    logo: fpalm-logo2.png
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Procesos estocásticos
+
+* Muchos sistemas del mundo real cambian aleatoriamente en el tiempo.
+* Los **procesos estocásticos** son modelos estadísticos diseñados para estos sistemas.
+* Las **cadenas de Markov** son *un tipo especial de proceso estocástico*
+* Un proceso estocástico es una secuencia de variales aleatorias $X_0,X_1,\dots$ que se denota usualmente como $\{X_t\}$.
+* Tienen su origen en el análisis de los juegos de azar, formalizado por Pascal y  Fermat en el s. XVII.
+
+## Componentes de un Proceso Estocástico
+
+* El **espacio de estados** es el conjunto de todos los valores que $X_t$ puede tomar.
+    + En este curso, se considerarán cadenas cuyo espacio de estados es *discreto*, es decir, numerable, y *finito*.
+* El conjunto índice $T$ es de dónde toman valores los índices $t \in T$ de las variables aleatorias, con frecuencia se asocia al tiempo y es un conjunto ordenado.
+* Un **estado** es un vector $\upsilon$-dimensional, $\mathbf{S} = (s_1,s_2,\dots,s_\upsilon)$
+    + Si los valores de $s_i$ son enumerables, habrán $m$ valores posibles $\mathbf{s}^1,\mathbf{s}^2,\dots, \mathbf{s}^m$ que puede tomar $X_t$.
+
+## La Ruina del Jugador
+
+* En el tiempo 0, un jugador tiene $X_0=\$2$, y en cada jugada (cada hora o día) apuesta $\$1$. Gana con una probabilidad $p$ y pierde con una probabilidad $1-p$.
+Abandonará si llega a tener $\$4$ o si pierde todo el dinero.
+    + El espacio de estados sería $\mathbf{S}=\{0,1,2,3,4\}$
+    + Sea $X_t$ la cantidad de dinero que tiene después de la $t$-ésima apuesta.
+    Así, $X_{t+1}=\begin{cases}
+    X_t+1  & \quad \text{con probabilidad}~p\\
+    X_t-1  & \quad \text{con probabilidad}~1-p\\
+  \end{cases}$
+    + Si $X_t=4$, entonces $X_{t+1}=X_{t+2}=\dots=4$
+    + Si $X_t=0$, entonces $X_{t+1}=X_{t+2}=\dots=0$
+
+## Cadenas de Markov
+* Tienen la propiedad que las probabilidades que describen el proceso en el futuro dependen sólo del estado actual, y, por lo tanto, son independientes de los eventos del pasado.
+* Reciben su nombre por una serie de artículos que [Andréi Markov](https://es.wikipedia.org/wiki/Andr%C3%A9i_M%C3%A1rkov) publicó en 1907.
+* Aplicaciones: estimación temporal de la demanda, análisis de
+redes genéticas, valor del crésdito, transmisión de información, etc.
+
+## Definición de Cadena de Markov
+
+* El proceso Estocástico $X = {X_t; t=0,1,\dots}$ con espacio de estados discreto $\Omega$ es una **Cadena de Markov** si se cumple para cada $i,j,k_t \in \Omega$ y $t \in 0, 1,\dots$
+* $Pr\{X_{t+1}=j|X_0=k_0,\dots,X_{t-1}=k_{t-1},X_t=i\}\\ = Pr\{X_{t+1}=j|X_t=i\}$
+* Para cualquier conjunto de estados $i_0,\dots,i_t$ en el espacio de estados. Se dice además que la cadena de Markov es *estacionaria* si
+* $Pr\{X_1=j|X_0=i\} = Pr\{X_{t+1}=j|X_t=i\}$
+  
